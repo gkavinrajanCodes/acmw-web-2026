@@ -26,6 +26,7 @@ const CSPathshalaGallery = () => {
           key={item.id}
           onHoverStart={() => setHoveredIndex(i)}
           onHoverEnd={() => setHoveredIndex(null)}
+          onClick={() => setHoveredIndex(hoveredIndex === i ? null : i)}
           animate={{
             flex: hoveredIndex === null ? 1 : hoveredIndex === i ? 6 : 0.5,
           }}
@@ -51,10 +52,10 @@ const CSPathshalaGallery = () => {
               y: hoveredIndex === i ? 0 : 20
             }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-x-0 bottom-0 p-6 md:p-8 whitespace-nowrap"
+            className="absolute inset-x-0 bottom-0 p-4 md:p-8 flex flex-col justify-end overflow-hidden"
           >
-            <h3 className="text-white text-2xl md:text-3xl font-bold mb-2">{item.title}</h3>
-            <p className="text-white/70 text-sm font-medium hidden md:block">{item.desc}</p>
+            <h3 className="text-white text-sm sm:text-lg md:text-3xl font-bold mb-1 md:mb-2 truncate">{item.title}</h3>
+            <p className="text-white/70 text-xs sm:text-sm font-medium hidden md:block truncate">{item.desc}</p>
           </motion.div>
         </motion.div>
       ))}
