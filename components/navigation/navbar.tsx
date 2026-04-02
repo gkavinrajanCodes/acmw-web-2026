@@ -29,11 +29,10 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
             ? "bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/[0.08]"
             : "bg-transparent"
-        }`}
+          }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
@@ -42,12 +41,12 @@ export function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center transition-transform hover:scale-105">
-              <Image 
-                src="/acm-w logo.png" 
-                alt="ACM-W SSN Logo" 
-                width={240} 
-                height={70} 
-                className="h-14 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity" 
+              <Image
+                src="/acm-w logo.png"
+                alt="ACM-W SSN Logo"
+                width={240}
+                height={70}
+                className="h-14 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
 
@@ -157,7 +156,7 @@ export function Navbar() {
               <p className="text-white/50 mb-8 leading-relaxed font-medium">
                 To officially join the SSN chapter, you require an active global ACM Membership. Clicking proceed will securely route you to the official ACM portal.
               </p>
-              
+
               <div className="flex flex-col gap-3">
                 <a
                   href="https://www.acm.org/membership"
