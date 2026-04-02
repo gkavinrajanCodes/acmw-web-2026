@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView, useMotionValue, useMotionTemplate } from "framer-motion";
-import { ExternalLink, Code2, Bug, Wifi, Rocket, Layers, Network, Sparkles } from "lucide-react";
+import { ExternalLink, Code2, Bug, Brain, Rocket, Layers, Network, Sparkles } from "lucide-react";
 
 const pioneers = [
   {
@@ -14,6 +14,7 @@ const pioneers = [
     gradient: "from-blue-500 to-indigo-500",
     icon: Code2,
     span: "md:col-span-2",
+    wikiUrl: "https://en.wikipedia.org/wiki/Ada_Lovelace",
   },
   {
     name: "Grace Hopper",
@@ -24,16 +25,18 @@ const pioneers = [
     gradient: "from-emerald-500 to-teal-500",
     icon: Bug,
     span: "md:col-span-1",
+    wikiUrl: "https://en.wikipedia.org/wiki/Grace_Hopper",
   },
   {
-    name: "Hedy Lamarr",
-    years: "1914 - 2000",
-    title: "Inventor of Frequency Hopping",
+    name: "Fei-Fei Li",
+    years: "1976 - Present",
+    title: "Pioneer of Modern AI & Computer Vision",
     description:
-      "Co-invented spread spectrum technology during WWII, which became the foundation for WiFi, Bluetooth, and GPS systems we use today.",
-    gradient: "from-violet-500 to-indigo-500",
-    icon: Wifi,
+      "Created ImageNet, the landmark dataset that ignited the deep learning revolution. As Chief Scientist of AI/ML at Google Cloud, she champions human-centered AI and founded AI4ALL.",
+    gradient: "from-violet-500 to-pink-500",
+    icon: Brain,
     span: "md:col-span-1",
+    wikiUrl: "https://en.wikipedia.org/wiki/Fei-Fei_Li",
   },
   {
     name: "Katherine Johnson",
@@ -44,6 +47,7 @@ const pioneers = [
     gradient: "from-pink-500 to-rose-500",
     icon: Rocket,
     span: "md:col-span-2",
+    wikiUrl: "https://en.wikipedia.org/wiki/Katherine_Johnson",
   },
   {
     name: "Margaret Hamilton",
@@ -54,6 +58,7 @@ const pioneers = [
     gradient: "from-amber-500 to-orange-500",
     icon: Layers,
     span: "md:col-span-2",
+    wikiUrl: "https://en.wikipedia.org/wiki/Margaret_Hamilton_(software_engineer)",
   },
   {
     name: "Radia Perlman",
@@ -64,6 +69,7 @@ const pioneers = [
     gradient: "from-cyan-500 to-blue-500",
     icon: Network,
     span: "md:col-span-1",
+    wikiUrl: "https://en.wikipedia.org/wiki/Radia_Perlman",
   },
 ];
 
@@ -158,6 +164,7 @@ function PioneerDetailCard({
   description,
   gradient,
   icon: Icon,
+  wikiUrl,
 }: {
   name: string;
   years: string;
@@ -165,6 +172,7 @@ function PioneerDetailCard({
   description: string;
   gradient: string;
   icon: React.ElementType;
+  wikiUrl: string;
 }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -214,12 +222,19 @@ function PioneerDetailCard({
               <Icon className="w-7 h-7 text-white drop-shadow-md" />
             </div>
           </div>
-          <motion.div
-            className="opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-white/5 rounded-full border border-white/10"
-            whileHover={{ scale: 1.1, rotate: 12 }}
+          <a
+            href={wikiUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
           >
-            <ExternalLink className="w-4 h-4 text-white" />
-          </motion.div>
+            <motion.div
+              className="opacity-0 group-hover:opacity-100 transition-opacity p-2 bg-white/5 rounded-full border border-white/10 hover:bg-white/10"
+              whileHover={{ scale: 1.1, rotate: 12 }}
+            >
+              <ExternalLink className="w-4 h-4 text-white" />
+            </motion.div>
+          </a>
         </div>
 
         {/* Name and years */}

@@ -13,10 +13,9 @@ function DiscordIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 const socialLinks = [
-  { icon: DiscordIcon, href: "https://discord.gg/nNgXEapaug", label: "Discord" },
   { icon: Linkedin, href: "https://www.linkedin.com/company/ssn-acm-w-student-chapter", label: "LinkedIn" },
   { icon: Youtube, href: "https://www.youtube.com/channel/UCd6XWQr408WoWJFThGfychw", label: "YouTube" },
-  { icon: Instagram, href: "https://instagram.com/ssnacmw?utm_medium=copy_link", label: "Instagram" },
+  { icon: Instagram, href: "https://www.instagram.com/acmw__ssn/", label: "Instagram" },
 ];
 
 const quickLinks = [
@@ -43,7 +42,7 @@ export function Footer() {
                 />
               </div>
               <span className="text-xl font-bold tracking-tight text-white drop-shadow-sm">
-                ACM-W <span className="text-white/60 font-medium">SSN</span>
+                SSN <span className="text-white/60 font-medium">ACM-W</span>
               </span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-md mb-6">
@@ -113,7 +112,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/30">
-            &copy; {new Date().getFullYear()} ACM-W SSN. All rights reserved.
+            &copy; {new Date().getFullYear()} SSN ACM-W. All rights reserved.
           </p>
           <p className="text-sm text-white/30">
             Part of{" "}

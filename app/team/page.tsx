@@ -149,6 +149,120 @@ const committees = [
   },
 ];
 
+// Extracted into its own component so hooks are called at the top level (React rules of hooks)
+function TeamCard({
+  member,
+  index,
+  totalCards,
+  scrollYProgress,
+}: {
+  member: any;
+  index: number;
+  totalCards: number;
+  scrollYProgress: any;
+}) {
+  const isFirst = index === 0;
+  const start = isFirst ? 0 : (index - 1) * (1 / (totalCards - 1));
+  const end = isFirst ? 0 : index * (1 / (totalCards - 1));
+
+  const x = useTransform(
+    scrollYProgress,
+    [start, end],
+    isFirst ? ["-50%", "-50%"] : ["100vw", "-50%"]
+  );
+  const scale = useTransform(scrollYProgress, [end, 1], [1, 1 - (totalCards - index - 1) * 0.05]);
+  const yOffsetEnd = -50 - (totalCards - index - 1) * 2;
+  const y = useTransform(scrollYProgress, [end, 1], ["-50%", `${yOffsetEnd}%`]);
+  const opacity = useTransform(scrollYProgress, [end, 1], [1, 1 - (totalCards - index - 1) * 0.08]);
+
+  return (
+    <motion.div
+      className={`absolute overflow-hidden rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl ${
+        member.isTitle
+          ? "w-[95vw] h-[85vh] max-w-7xl bg-[#050505] flex items-center justify-center p-8"
+          : "w-[92vw] md:w-[85vw] lg:w-[65vw] max-w-5xl bg-[#0f0f0f] p-8 md:p-16"
+      }`}
+      style={{
+        left: "50%",
+        top: "50%",
+        x,
+        y,
+        scale,
+        opacity,
+        zIndex: index,
+        transformOrigin: "top center",
+        willChange: "transform, opacity",
+        translateZ: 0, // Force GPU compositing layer
+      }}
+    >
+      {member.isTitle ? (
+        <>
+          <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden">
+            <div className="absolute inset-0 bg-[url('/placeholder.jpeg')] bg-cover bg-center opacity-30" />
+            <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-950/70 via-[#0a0a0a]/90 to-blue-950/70" />
+          </div>
+          <div className="relative z-20 text-center">
+            <h1 className="mb-6 text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white">
+              Our{" "}
+              <span className="bg-gradient-to-r from-fuchsia-400 via-pink-400 to-rose-400 bg-clip-text text-transparent drop-shadow-lg">
+                Team
+              </span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-xl md:text-2xl text-white/70 font-medium">
+              Meet the passionate individuals driving SSN ACM-W forward.
+            </p>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-14">
+          <div className="flex-shrink-0">
+            <div className={`relative flex h-36 w-36 md:h-48 md:w-48 items-center justify-center rounded-[2.5rem] bg-gradient-to-br ${member.gradient} shadow-2xl p-1 md:p-1.5`}>
+              {member.image ? (
+                <div className="relative w-full h-full rounded-[2.2rem] md:rounded-[2.1rem] overflow-hidden bg-[#050505]">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    priority={index < 3}
+                    className="object-cover"
+                    style={{ objectPosition: member.imagePosition || "center" }}
+                  />
+                </div>
+              ) : (
+                <span className="relative z-10 text-5xl md:text-6xl font-black text-white">
+                  {member.name.split(" ").filter(Boolean).slice(0, 2).map((n: string) => n[0]).join("")}
+                </span>
+              )}
+              <div className={`absolute -inset-1 rounded-[2.5rem] bg-gradient-to-br ${member.gradient} opacity-30 blur-2xl -z-10`} />
+            </div>
+          </div>
+
+          <div className="flex-1 text-center md:text-left">
+            <h3 className="mb-3 text-4xl md:text-5xl font-black text-white tracking-tight">{member.name}</h3>
+            <p className={`mb-4 text-xl md:text-2xl font-bold tracking-wide bg-gradient-to-r ${member.gradient} bg-clip-text text-transparent`}>{member.role}</p>
+            <p className="mb-8 text-base md:text-lg font-semibold tracking-widest uppercase text-white/40">{member.department}</p>
+            <div className="mb-12 text-lg md:text-xl text-white/60 leading-relaxed max-w-xl mx-auto md:mx-0">
+              <p>{member.bio}</p>
+            </div>
+            <div className="flex justify-center md:justify-start gap-4">
+              {member.social?.linkedin && (
+                <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              )}
+              {member.social?.email && (
+                <a href={`mailto:${member.social.email}`} className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
+                  <Mail className="h-5 w-5" />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
 export default function TeamPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -165,150 +279,15 @@ export default function TeamPage() {
         <div className="sticky top-20 md:top-24 h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)] w-full overflow-hidden flex items-center justify-center">
           {(() => {
             const cards: any[] = [{ isTitle: true, name: "TitleCard" }, ...team];
-            return cards.map((member, index) => {
-              const totalCards = cards.length;
-              const isFirst = index === 0;
-
-              // Timing for when this card slides in
-              const start = isFirst ? 0 : (index - 1) * (1 / (totalCards - 1));
-              const end = isFirst ? 0 : index * (1 / (totalCards - 1));
-
-              // X position: offscreen right to center
-              const x = useTransform(
-                scrollYProgress,
-                [start, end],
-                isFirst ? ["-50%", "-50%"] : ["100vw", "-50%"]
-              );
-
-              // Scale: starts shrinking after this card is fully centered
-              const scale = useTransform(
-                scrollYProgress,
-                [end, 1],
-                [1, 1 - (totalCards - index - 1) * 0.05]
-              );
-
-              // Y offset: shifts up slightly as it gets buried to create a stack effect
-              const yOffsetEnd = -50 - ((totalCards - index - 1) * 2);
-              const y = useTransform(
-                scrollYProgress,
-                [end, 1],
-                ["-50%", `${yOffsetEnd}%`]
-              );
-
-              // Opacity: fades slightly when buried
-              const opacity = useTransform(
-                scrollYProgress,
-                [end, 1],
-                [1, 1 - (totalCards - index - 1) * 0.08]
-              );
-
-              return (
-                <motion.div
-                  key={member.name}
-                  className={`absolute overflow-hidden rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl ${member.isTitle
-                    ? "w-[95vw] h-[85vh] max-w-7xl bg-[#050505] flex items-center justify-center p-8"
-                    : "w-[92vw] md:w-[85vw] lg:w-[65vw] max-w-5xl bg-[#0f0f0f] p-8 md:p-16"
-                    }`}
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    x,
-                    y,
-                    scale,
-                    opacity,
-                    zIndex: index, // proper stacking
-                    transformOrigin: "top center",
-                  }}
-                >
-                  {member.isTitle ? (
-                    <>
-                      {/* Background image for title card */}
-                      <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden">
-                        <div className="absolute inset-0 bg-[url('/placeholder.jpeg')] bg-cover bg-center opacity-30" />
-                        <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-950/70 via-[#0a0a0a]/90 to-blue-950/70" />
-                      </div>
-
-                      <div className="relative z-20 text-center">
-                        <h1 className="mb-6 text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white">
-                          Our{" "}
-                          <span className="bg-gradient-to-r from-fuchsia-400 via-pink-400 to-rose-400 bg-clip-text text-transparent drop-shadow-lg">
-                            Team
-                          </span>
-                        </h1>
-                        <p className="max-w-2xl mx-auto text-xl md:text-2xl text-white/70 font-medium">
-                          Meet the passionate individuals driving ACM-W SSN forward.
-                        </p>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-14">
-                      {/* Avatar */}
-                      <div className="flex-shrink-0">
-                        <div className={`relative flex h-36 w-36 md:h-48 md:w-48 items-center justify-center rounded-[2.5rem] bg-gradient-to-br ${member.gradient} shadow-2xl p-1 md:p-1.5`}>
-                          {member.image ? (
-                            <div className="relative w-full h-full rounded-[2.2rem] md:rounded-[2.1rem] overflow-hidden bg-[#050505]">
-                              <Image
-                                src={member.image}
-                                alt={member.name}
-                                fill
-                                priority={index < 3}
-                                className="object-cover"
-                                style={{ objectPosition: (member as any).imagePosition || "center" }}
-                              />
-                            </div>
-                          ) : (
-                            <span className="relative z-10 text-5xl md:text-6xl font-black text-white">
-                              {member.name.split(" ").filter(Boolean).slice(0, 2).map((n: string) => n[0]).join("")}
-                            </span>
-                          )}
-                          <div className={`absolute -inset-1 rounded-[2.5rem] bg-gradient-to-br ${member.gradient} opacity-30 blur-2xl -z-10`} />
-                        </div>
-                      </div>
-
-                      <div className="flex-1 text-center md:text-left">
-                        <h3 className="mb-3 text-4xl md:text-5xl font-black text-white tracking-tight">
-                          {member.name}
-                        </h3>
-                        <p className={`mb-4 text-xl md:text-2xl font-bold tracking-wide bg-gradient-to-r ${member.gradient} bg-clip-text text-transparent`}>
-                          {member.role}
-                        </p>
-                        <p className="mb-8 text-base md:text-lg font-semibold tracking-widest uppercase text-white/40">
-                          {member.department}
-                        </p>
-                        <div className="mb-12 text-lg md:text-xl text-white/60 leading-relaxed max-w-xl mx-auto md:mx-0">
-                          <p>{member.bio}</p>
-                          {/* Ready for extending with quotes or achievements! */}
-                        </div>
-
-                        {/* Social links */}
-                        <div className="flex justify-center md:justify-start gap-4">
-                          {member.social?.linkedin && (
-                            <a href={member.social.linkedin} className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
-                              <Linkedin className="h-5 w-5" />
-                            </a>
-                          )}
-                          {member.social?.twitter && (
-                            <a href={member.social.twitter} className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
-                              <Twitter className="h-5 w-5" />
-                            </a>
-                          )}
-                          {member.social?.github && (
-                            <a href={member.social.github} className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
-                              <Github className="h-5 w-5" />
-                            </a>
-                          )}
-                          {member.social?.email && (
-                            <a href={`mailto:${member.social.email}`} className="rounded-2xl bg-white/5 p-3.5 text-white/40 transition-all hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95">
-                              <Mail className="h-5 w-5" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              );
-            });
+            return cards.map((member, index) => (
+              <TeamCard
+                key={member.name}
+                member={member}
+                index={index}
+                totalCards={cards.length}
+                scrollYProgress={scrollYProgress}
+              />
+            ));
           })()}
         </div>
       </section>
@@ -347,7 +326,7 @@ export default function TeamPage() {
                       </div>
                       <div className="flex justify-between items-center text-sm font-semibold tracking-widest text-white/40 uppercase pl-7">
                         <span>Lead</span>
-                        <span>{domain.lead.dept}, II/III</span>
+                        <span>{domain.lead.dept}, {domain.lead.year}</span>
                       </div>
                     </li>
                   )}

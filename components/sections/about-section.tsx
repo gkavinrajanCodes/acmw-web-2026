@@ -1,8 +1,36 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { Users, Globe, Calendar, Award } from "lucide-react";
+
+function AnimatedCount({ value, isInView }: { value: string; isInView: boolean }) {
+  // Parse numeric portion and suffix (e.g. "150K+" → num=150, suffix="K+")
+  const match = value.match(/^(\d+\.?\d*)(.*)$/);
+  const num = match ? parseFloat(match[1]) : 0;
+  const suffix = match ? match[2] : "";
+
+  const motionVal = useMotionValue(0);
+  const spring = useSpring(motionVal, { stiffness: 30, damping: 25, mass: 1.2 });
+  const displayRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (isInView) {
+      motionVal.set(num);
+    }
+  }, [isInView, num, motionVal]);
+
+  useEffect(() => {
+    const unsubscribe = spring.on("change", (latest) => {
+      if (displayRef.current) {
+        displayRef.current.textContent = Math.round(latest) + suffix;
+      }
+    });
+    return unsubscribe;
+  }, [spring, suffix]);
+
+  return <span ref={displayRef}>0{suffix}</span>;
+}
 
 const stats = [
   { icon: Calendar, value: "50+", label: "Years of ACM-W" },
@@ -111,7 +139,7 @@ export function AboutSection() {
                 <div className="relative">
                   <stat.icon className="w-8 h-8 text-purple-400 mb-4" />
                   <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                    {stat.value}
+                    <AnimatedCount value={stat.value} isInView={isInView} />
                   </div>
                   <div className="text-sm text-white/50">{stat.label}</div>
                 </div>
@@ -166,7 +194,7 @@ export function AboutSection() {
                     className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06]"
                   >
                     <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-1">
-                      {item.value}
+                      <AnimatedCount value={item.value} isInView={isInView} />
                     </div>
                     <div className="text-sm text-white/50">{item.label}</div>
                   </div>
