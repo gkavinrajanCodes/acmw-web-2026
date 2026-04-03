@@ -9,7 +9,9 @@ import { Menu, X, Globe, ArrowRight } from "lucide-react";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/events", label: "Events" },
+  { href: "/cspathshala", label: "CSPathshala" },
   { href: "/team", label: "Team" },
+  { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
 ];
 

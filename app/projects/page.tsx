@@ -1,211 +1,256 @@
 "use client";
 
-import { Github, ExternalLink, Code2, Cpu, Globe, BookOpen, Users, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/navigation/footer";
+import {
+  Github,
+  ExternalLink,
+  Cpu,
+  Network,
+  BrainCircuit,
+  Zap,
+  Shield,
+  BarChart3,
+  Layers,
+  Radio,
+} from "lucide-react";
 
 const projects = [
   {
-    title: "SheHacks Portal",
-    description: "A comprehensive hackathon management platform built for women-centric tech events. Features team formation, project submissions, judging workflows, and real-time leaderboards.",
-    status: "Live",
-    tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
-    icon: Code2,
-    gradient: "from-violet-600 to-fuchsia-600",
-    github: "#",
-    demo: "#",
-    contributors: 8,
-    impact: "Used in 3 hackathons, 500+ participants",
+    id: "orderbook",
+    name: "Orderbook",
+    tagline: "High-Frequency Trading Engine",
+    description:
+      "A high-performance, thread-safe orderbook implementation in C++ built for high-frequency trading (HFT) environments. Manages buy/sell orders, handles sub-microsecond order matching, and supports the full spectrum of financial order types used in live markets.",
+    highlights: [
+      { icon: Zap, label: "Sub-µs order processing", color: "text-amber-400" },
+      { icon: Shield, label: "Full thread safety", color: "text-emerald-400" },
+      { icon: BarChart3, label: "O(1) cancellation", color: "text-blue-400" },
+      { icon: Layers, label: "GTC / FAK / FOK / GFD / Market", color: "text-violet-400" },
+    ],
+    techStack: ["C++17", "STL", "Multithreading", "Mutex", "Double-Linked List"],
+    gradient: "from-amber-500 via-orange-500 to-red-500",
+    bgGlow: "bg-amber-500/5",
+    borderHover: "hover:border-amber-500/40",
+    glowColor: "rgba(245,158,11,0.15)",
+    icon: BarChart3,
+    github: "https://github.com/gkavinrajanCodes/Orderbook",
+    badge: "Systems • Finance",
+    badgeColor: "bg-amber-500/10 border-amber-500/20 text-amber-300",
   },
   {
-    title: "TechMentor Connect",
-    description: "A mentorship matching platform connecting women students with industry professionals. Uses AI to match mentors and mentees based on skills, interests, and goals.",
-    status: "Beta",
-    tech: ["React", "Python", "FastAPI", "PostgreSQL"],
-    icon: Users,
-    gradient: "from-fuchsia-600 to-pink-600",
-    github: "#",
-    contributors: 5,
-    impact: "50+ mentorship pairs formed",
+    id: "iisy",
+    name: "IIsy",
+    tagline: "Hybrid In-Network ML Classification",
+    description:
+      "Artifact for the IEEE/ACM Transactions on Networking paper — IIsy: Hybrid In-Network Classification Using Programmable Switches. Deploys a compact ML model directly inside the network switch and a larger model at the endpoint, achieving line-rate classification without sacrificing accuracy.",
+    highlights: [
+      { icon: BrainCircuit, label: "In-network ML inference", color: "text-violet-400" },
+      { icon: Network, label: "Programmable P4 switches", color: "text-blue-400" },
+      { icon: Zap, label: "Line-rate classification", color: "text-cyan-400" },
+      { icon: Layers, label: "Hybrid split-model architecture", color: "text-purple-400" },
+    ],
+    techStack: ["Python", "P4", "Tofino", "BMv2", "Scikit-learn"],
+    gradient: "from-violet-500 via-purple-500 to-blue-500",
+    bgGlow: "bg-violet-500/5",
+    borderHover: "hover:border-violet-500/40",
+    glowColor: "rgba(139,92,246,0.15)",
+    icon: BrainCircuit,
+    github: "https://github.com/gkavinrajanCodes/iisy",
+    badge: "Research • IEEE/ACM",
+    badgeColor: "bg-violet-500/10 border-violet-500/20 text-violet-300",
   },
   {
-    title: "CodeHer Learning",
-    description: "An interactive learning platform with curated resources, coding challenges, and progress tracking specifically designed for women beginning their tech journey.",
-    status: "Live",
-    tech: ["Vue.js", "Node.js", "MongoDB", "Docker"],
-    icon: BookOpen,
-    gradient: "from-cyan-600 to-blue-600",
-    github: "#",
-    demo: "#",
-    contributors: 12,
-    impact: "1000+ active learners",
-  },
-  {
-    title: "WiT Research Hub",
-    description: "A collaborative platform for sharing and discovering research opportunities in computer science. Connects students with faculty for research projects.",
-    status: "Development",
-    tech: ["Next.js", "Prisma", "PostgreSQL", "tRPC"],
-    icon: Cpu,
-    gradient: "from-emerald-600 to-teal-600",
-    github: "#",
-    contributors: 4,
-    impact: "Coming soon",
-  },
-  {
-    title: "SafeSpace Bot",
-    description: "A Discord bot providing resources, reporting mechanisms, and community moderation for women in tech Discord servers.",
-    status: "Live",
-    tech: ["Python", "Discord.py", "Redis", "NLP"],
-    icon: Sparkles,
-    gradient: "from-amber-600 to-orange-600",
-    github: "#",
-    contributors: 3,
-    impact: "Active in 15+ servers",
-  },
-  {
-    title: "WiC Network",
-    description: "A professional networking platform exclusively for women in computing across India. Features job boards, events, and community forums.",
-    status: "Planning",
-    tech: ["React Native", "GraphQL", "AWS"],
-    icon: Globe,
-    gradient: "from-rose-600 to-red-600",
-    github: "#",
-    contributors: 0,
-    impact: "Launching Q3 2026",
+    id: "tcp-sniffer",
+    name: "TCP Sniffer",
+    tagline: "Network Packet Analyzer in C++",
+    description:
+      "A low-level network packet capture and analysis tool written in C++. Uses raw sockets and libpcap to intercept live traffic with port and protocol filters, and supports offline `.pcap` file analysis — bridging the gap between systems programming and network forensics.",
+    highlights: [
+      { icon: Radio, label: "Raw socket live capture", color: "text-cyan-400" },
+      { icon: Network, label: "libpcap integration", color: "text-blue-400" },
+      { icon: Shield, label: "TCP / port filtering", color: "text-emerald-400" },
+      { icon: Cpu, label: "Offline .pcap analysis", color: "text-rose-400" },
+    ],
+    techStack: ["C++", "Raw Sockets", "libpcap", "Linux", "Makefile"],
+    gradient: "from-cyan-500 via-teal-500 to-emerald-500",
+    bgGlow: "bg-cyan-500/5",
+    borderHover: "hover:border-cyan-500/40",
+    glowColor: "rgba(6,182,212,0.15)",
+    icon: Network,
+    github: "https://github.com/gkavinrajanCodes/tcp-sniffer",
+    badge: "Systems • Networking",
+    badgeColor: "bg-cyan-500/10 border-cyan-500/20 text-cyan-300",
   },
 ];
 
-const statusColors: Record<string, string> = {
-  Live: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  Beta: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  Development: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  Planning: "bg-violet-500/20 text-violet-400 border-violet-500/30",
-};
+function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const Icon = project.icon;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className={`group relative rounded-[2rem] border border-white/[0.08] bg-white/[0.02] ${project.borderHover} transition-all duration-500 overflow-hidden`}
+      style={{ willChange: "transform, opacity" }}
+    >
+      {/* Glow on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]"
+        style={{ background: `radial-gradient(ellipse at top left, ${project.glowColor}, transparent 70%)` }}
+      />
+
+      {/* Gradient top bar */}
+      <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${project.gradient} opacity-50 group-hover:opacity-100 transition-opacity`} />
+
+      <div className="relative p-8 md:p-12">
+        {/* Header row */}
+        <div className="flex items-start justify-between mb-8">
+          <div className="flex items-center gap-5">
+            {/* Icon orb */}
+            <div className="relative">
+              <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-30 blur-xl rounded-full`} />
+              <div className="relative w-14 h-14 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)]">
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+            </div>
+            <div>
+              <span className={`inline-block text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full border ${project.badgeColor} mb-2`}>
+                {project.badge}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight leading-none">{project.name}</h2>
+            </div>
+          </div>
+
+          {/* GitHub link */}
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium"
+          >
+            <Github className="w-4 h-4" />
+            <span className="hidden sm:inline">View Repo</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+
+        {/* Tagline */}
+        <p className={`text-lg md:text-xl font-bold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-4 inline-block pb-0.5`}>
+          {project.tagline}
+        </p>
+
+        {/* Description */}
+        <p className="text-white/50 leading-relaxed mb-10 max-w-3xl font-medium">
+          {project.description}
+        </p>
+
+        {/* Highlights grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          {project.highlights.map(({ icon: HIcon, label, color }) => (
+            <div
+              key={label}
+              className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] group-hover:border-white/10 transition-colors"
+            >
+              <HIcon className={`w-4 h-4 flex-shrink-0 ${color}`} />
+              <span className="text-xs font-semibold text-white/60 leading-tight">{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Tech stack */}
+        <div className="flex flex-wrap gap-2">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1 rounded-full text-xs font-bold text-white/40 border border-white/[0.06] bg-white/[0.02] tracking-wide"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function ProjectsPage() {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true });
+
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
       <Navbar />
-      
-      {/* Header */}
-      <section className="relative overflow-hidden pb-16 pt-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-950/30 via-[#0a0a0a] to-[#0a0a0a]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.15),transparent_50%)]" />
-        
-        <div className="max-w-7xl relative z-10 mx-auto px-6 lg:px-8">
-          <h1 className="mb-4 text-5xl font-black tracking-tight text-white md:text-6xl lg:text-7xl">
-            Our{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">
-              Projects
-            </span>
-          </h1>
-          <p className="max-w-2xl text-lg text-white/60 md:text-xl">
-            Open source tools and platforms built by our community, for the community.
-          </p>
-        </div>
-      </section>
 
-      {/* Projects Grid */}
-      <section className="relative py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <section className="relative pt-40 pb-32 overflow-hidden">
+        {/* Background ambience */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-gradient-to-b from-violet-600/8 via-blue-600/5 to-transparent blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-[400px] h-[400px] rounded-full bg-amber-500/3 blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 right-0 w-[350px] h-[350px] rounded-full bg-cyan-500/3 blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header */}
+          <motion.div
+            ref={headerRef}
+            className="text-center mb-24"
+            initial={{ opacity: 0, y: 40 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
+            <motion.span
+              className="inline-block text-sm font-bold tracking-[0.3em] uppercase text-purple-400 mb-5"
+              initial={{ opacity: 0 }}
+              animate={headerInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.2 }}
+            >
+              Built by SSN ACM-W
+            </motion.span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter mb-6 leading-none">
+              Our{" "}
+              <span className="bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block pb-1">
+                Projects
+              </span>
+            </h1>
+            <p className="text-xl text-white/50 font-medium max-w-2xl mx-auto leading-relaxed">
+              From sub-microsecond trading engines to IEEE-published network ML research — open-source projects born out of SSN ACM-W.
+            </p>
+
+
+          </motion.div>
+
+          {/* Project cards */}
+          <div className="flex flex-col gap-8">
             {projects.map((project, index) => (
-              <div
-                key={project.title}
-                className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:bg-white/10"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Header with icon */}
-                <div className="p-8 pb-4">
-                  <div className="mb-4 flex items-start justify-between">
-                    <div className={`rounded-2xl bg-gradient-to-br ${project.gradient} p-3`}>
-                      <project.icon className="h-6 w-6 text-white" />
-                    </div>
-                    <span className={`rounded-full border px-3 py-1 text-xs font-medium ${statusColors[project.status]}`}>
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <h3 className="mb-2 text-xl font-bold text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mb-4 text-sm text-white/50">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Tech stack */}
-                <div className="px-8 pb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-lg bg-white/5 px-2 py-1 text-xs text-white/60"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Impact & contributors */}
-                <div className="mt-auto border-t border-white/10 p-8 pt-4">
-                  <div className="mb-4 flex items-center justify-between text-sm">
-                    <span className="text-white/40">
-                      {project.contributors} contributors
-                    </span>
-                    <span className="text-white/60">{project.impact}</span>
-                  </div>
-
-                  {/* Links */}
-                  <div className="flex gap-3">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2 text-sm text-white/60 transition-all hover:bg-white/10 hover:text-white"
-                      >
-                        <Github className="h-4 w-4" />
-                        Code
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2 text-sm text-white/60 transition-all hover:bg-white/10 hover:text-white"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Contribute CTA */}
-      <section className="relative py-16">
-        <div className="container mx-auto px-6">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-cyan-950/50 via-blue-950/50 to-violet-950/50 p-12 text-center backdrop-blur-sm">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              Want to Contribute?
-            </h2>
-            <p className="mx-auto mb-8 max-w-xl text-white/60">
-              All our projects are open source. Check out our GitHub organization to find issues, 
-              submit PRs, or propose new project ideas.
-            </p>
+          {/* Bottom CTA */}
+          <motion.div
+            className="mt-24 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="text-white/30 text-sm font-medium mb-4 tracking-wide">See all repositories on GitHub</p>
             <a
-              href="https://github.com/acmw-ssn"
+              href="https://github.com/gkavinrajanCodes"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 px-8 py-4 font-semibold text-white transition-all hover:shadow-lg hover:shadow-cyan-500/25"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.06] hover:border-white/20 transition-all text-sm font-semibold"
             >
-              <Github className="h-5 w-5" />
-              Visit Our GitHub
+              <Github className="w-4 h-4" />
+              gkavinrajanCodes
+              <ExternalLink className="w-3 h-3" />
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 

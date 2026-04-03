@@ -274,36 +274,212 @@ export default function EventsPage() {
       {/* Yugo Hackathon Section */}
       <YugoHackathonSection />
 
-      {/* CSPathshala Section */}
-      <section id="csp-initiative" className="py-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-emerald-900/10 to-transparent pointer-events-none" />
-
+      {/* ── Code in Tandem ── */}
+      <section className="py-24 md:py-32 relative overflow-hidden bg-[#0a0a0a]">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <div className="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
-                The <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">CSPathshala</span> <br /> Initiative
+          {/* Header */}
+          <div className="mb-16 flex flex-col lg:flex-row gap-10 items-start lg:items-end justify-between border-b border-white/[0.05] pb-16">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-md mb-6">
+                <span className="text-sm font-semibold tracking-widest text-indigo-400 uppercase">On-Campus · Jan 12, 2026</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                Code in <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">Tandem</span>
               </h2>
-              <p className="text-white/60 text-lg leading-relaxed mb-6">
-                Started by ACM India in 2016, CSpathshala aims to introduce computational thinking into K-12 education across India. The objective is to promote logical problem solving and initiate dialogues with educational boards to formalize computing curricula.
-              </p>
-              <p className="text-white/60 text-lg leading-relaxed">
-                With India's 1.6 million schools and incredible regional diversity, delivering computing education poses unique challenges. Our ACM-W student chapter proudly works at the grassroots level—visiting local schools catering to underprivileged students to teach basic to intermediate computational skills through unplugged, fun, and interactive curriculum activities.
+              <p className="text-white/60 text-xl font-medium leading-relaxed">
+                A paired programming contest where silence was the rule — participants switched laptops every 15 minutes, forced to read their partner's mind through code alone.
               </p>
             </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-md">
-              <blockquote className="text-xl md:text-2xl text-white font-medium italic leading-relaxed mb-6">
-                "Teaching computing is not just about digital literacy; it is about equipping rural and under-resourced students with formal, analytical logic to shape the future."
-              </blockquote>
+            <div className="flex-shrink-0 grid grid-cols-2 gap-4">
+              <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm min-w-[140px]">
+                <Users className="w-8 h-8 text-indigo-400 mb-4" />
+                <p className="text-3xl font-black text-white mb-1">11</p>
+                <p className="text-white/50 text-sm font-medium">Teams Competed</p>
+              </div>
+              <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm min-w-[140px]">
+                <Target className="w-8 h-8 text-violet-400 mb-4" />
+                <p className="text-3xl font-black text-white mb-1">4</p>
+                <p className="text-white/50 text-sm font-medium">Coding Slots</p>
+              </div>
             </div>
           </div>
 
-          <CSPathshalaGallery />
+          {/* How it worked */}
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-8">How it Worked</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {[
+              {
+                num: "01",
+                title: "Silent Coding",
+                desc: "First three 15-minute slots had zero communication — no talking, no messages. Pure code reading.",
+                color: "from-indigo-500 to-violet-500",
+              },
+              {
+                num: "02",
+                title: "Laptop Swap",
+                desc: "Every 15 minutes, participants switched machines — jumping into a live, unfamiliar codebase cold.",
+                color: "from-violet-500 to-purple-500",
+              },
+              {
+                num: "03",
+                title: "Open Finale",
+                desc: "The final slot unlocked full collaboration — debug together, optimise, and push to the finish line.",
+                color: "from-purple-500 to-pink-500",
+              },
+            ].map((step) => (
+              <div key={step.num} className="group relative p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 hover:border-white/20 transition-colors overflow-hidden">
+                <div className="absolute top-4 right-6 text-[80px] font-black text-white/[0.03] leading-none select-none">{step.num}</div>
+                <div className={`w-10 h-1 rounded-full bg-gradient-to-r ${step.color} mb-6`} />
+                <h4 className="text-xl font-bold text-white mb-3">{step.title}</h4>
+                <p className="text-white/50 leading-relaxed font-medium">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Tracks */}
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-8">Contest Tracks</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div className="group p-8 md:p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] transition-colors relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Brain className="w-32 h-32 text-indigo-400" />
+              </div>
+              <Activity className="w-10 h-10 text-indigo-400 mb-6 relative z-10" />
+              <h4 className="text-2xl font-bold text-white mb-4 relative z-10">DSA Track</h4>
+              <p className="text-white/50 leading-relaxed mb-8 relative z-10 text-lg">Algorithmic problem solving — data structures, dynamic programming, and graph theory under partner-switch pressure.</p>
+              <div className="flex flex-wrap gap-2 relative z-10">
+                <span className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm font-medium text-indigo-300">Data Structures</span>
+                <span className="px-4 py-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm font-medium text-indigo-300">Algorithms</span>
+              </div>
+            </div>
+            <div className="group p-8 md:p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] transition-colors relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Trophy className="w-32 h-32 text-violet-400" />
+              </div>
+              <Trophy className="w-10 h-10 text-violet-400 mb-6 relative z-10" />
+              <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Dev Track</h4>
+              <p className="text-white/50 leading-relaxed mb-8 relative z-10 text-lg">Build a Goblet of Fire themed frontend or architect a password management API — real-world dev under constraints.</p>
+              <div className="flex flex-wrap gap-2 relative z-10">
+                <span className="px-4 py-2 rounded-xl bg-violet-500/10 border border-violet-500/20 text-sm font-medium text-violet-300">Frontend</span>
+                <span className="px-4 py-2 rounded-xl bg-violet-500/10 border border-violet-500/20 text-sm font-medium text-violet-300">API Design</span>
+              </div>
+            </div>
+          </div>
+
+          {/* CIT Photos — editorial 1 large + 2 stacked */}
+          <div className="grid grid-cols-5 gap-3 md:gap-4 mb-10 h-[70vh] min-h-[500px]">
+            {/* Large featured photo */}
+            <div className="col-span-3 relative rounded-2xl overflow-hidden group">
+              <div className="absolute inset-0 bg-[#111]" />
+              <Image
+                src="/cit1.jpg"
+                alt="Code in Tandem"
+                fill
+                priority
+                className="object-contain transition-transform duration-700 group-hover:scale-105"
+                sizes="40vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-indigo-500/30 transition-colors" />
+            </div>
+            {/* Two stacked photos */}
+            <div className="col-span-2 flex flex-col gap-3 md:gap-4">
+              {["cit2.jpg", "cit3.jpg"].map((src, i) => (
+                <div key={src} className="relative flex-1 rounded-2xl overflow-hidden group">
+                  <div className="absolute inset-0 bg-[#111]" />
+                  <Image
+                    src={`/${src}`}
+                    alt={`Code in Tandem ${i + 2}`}
+                    fill
+                    priority
+                    className="object-contain transition-transform duration-700 group-hover:scale-105"
+                    sizes="25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-indigo-500/30 transition-colors" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* PDF Report link */}
+          <div className="flex justify-start">
+            <a
+              href="/3 - ACM-W Code in Tandem - Event Report.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.06] hover:border-white/20 transition-all text-sm font-semibold"
+            >
+              View Full Event Report →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Women's Day Celebration ── */}
+      <section className="py-24 md:py-32 relative overflow-hidden bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-900/10 via-transparent to-transparent pointer-events-none" />
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
+          <div className="mb-16 flex flex-col lg:flex-row gap-10 items-start lg:items-end justify-between border-b border-white/[0.05] pb-16">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/10 backdrop-blur-md mb-6">
+                <span className="text-sm font-semibold tracking-widest text-rose-400 uppercase">On-Campus · March 2026</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                Women&apos;s Day <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400">Celebration</span>
+              </h2>
+              <p className="text-white/60 text-xl font-medium leading-relaxed">
+                A special event honouring the contributions of women in technology — featuring panel discussions, recognition of achievements, and an inspiring gathering of women technologists at SSN.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <a
+                href="/Women's Day Event Report.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 transition-all text-sm font-semibold"
+              >
+                View Event Report →
+              </a>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: Users, title: "Community Gathering", desc: "Women students, faculty, and mentors came together in celebration of achievements and shared journeys in computing.", color: "text-rose-400" },
+              { icon: Brain, title: "Panel Discussions", desc: "Inspiring conversations on navigating careers in technology, breaking barriers, and building inclusive workplaces.", color: "text-pink-400" },
+              { icon: Trophy, title: "Recognition", desc: "Outstanding contributions by women members of the SSN ACM-W chapter were formally recognised and celebrated.", color: "text-fuchsia-400" },
+            ].map((item) => (
+              <div key={item.title} className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 hover:border-rose-500/20 transition-colors">
+                <item.icon className={`w-9 h-9 ${item.color} mb-6`} />
+                <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
+                <p className="text-white/50 leading-relaxed font-medium">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Women's Day Photos — full-width portrait side-by-side */}
+          <div className="grid grid-cols-2 gap-3 md:gap-5 mt-10">
+            {["womensday1.jpg", "womensday2.jpg"].map((src, i) => (
+              <div key={src} className="relative aspect-[3/4] rounded-2xl overflow-hidden group">
+                <Image
+                  src={`/${src}`}
+                  alt={`Women's Day moment ${i + 1}`}
+                  fill
+                  priority
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 35vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 rounded-2xl border border-white/10 group-hover:border-rose-500/30 transition-colors" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <Footer />
+
     </main>
   );
 }
