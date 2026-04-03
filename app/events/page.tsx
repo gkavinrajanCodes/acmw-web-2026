@@ -240,9 +240,9 @@ export default function EventsPage() {
             <span className="text-sm font-semibold tracking-widest text-violet-300 uppercase">On-Campus Flagship</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter mb-6 leading-tight pb-2">
             Computational <br />
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent drop-shadow-2xl">
+            <span className="inline-block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent drop-shadow-2xl pb-1">
               Thinking Workshop
             </span>
           </h1>
